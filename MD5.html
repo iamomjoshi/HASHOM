@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MD5 Encryption/Decryption</title>
+    <style>body {
+        background-color: #111;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+    
+    .container {
+        margin: 50px auto;
+        max-width: 600px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #222;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        padding-top: 5%;
+    }
+    
+    h2 {
+        margin-top: 20px;
+    }
+    
+    input[type="text"] {
+        width: calc(100% - 70px);
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #333;
+        background-color: #444;
+        color: #fff;
+    }
+    H1{
+        text-align: center;
+    }
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+    input{
+        margin-bottom: 20px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    #result {
+        width: 100%;
+        margin-top: 1vw;
+        padding-top: 2vw;
+        padding-bottom: 2vw;
+        color: #ddd;
+        background-color: #444;
+        border-radius: 5px;
+
+    }
+    </style>
+   
+</head>
+<body>
+    <h1>MD5 encryption & decryption</h1>
+    <div class="container">
+        <h2>Enter Text to Encrypt</h2>
+        <input type="text" id="textInput" required>
+        <button onclick="encryptText()">Encrypt</button>
+
+        <h2>Enter MD5 Hash to Decrypt</h2>
+        <input type="text" id="hashInput" required>
+        <button onclick="decryptHash()">Decrypt</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script>
+        function encryptText() {
+        var textInput = document.getElementById('textInput').value;
+        var encryptedText = CryptoJS.MD5(textInput).toString();
+        document.getElementById('result').innerHTML = `
+            <h2>Original Text: ${textInput}</h2>
+            <h2>Encrypted Text: ${encryptedText}</h2>
+        `;
+    }
+    
+    function decryptHash() {
+        var hashInput = document.getElementById('hashInput').value;
+        alert("MD5 hashes are not decryptable because they are irreversible. They can only be compared with other hashes.")
+    }
+    </script>
+</body>
+</html>

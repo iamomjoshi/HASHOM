@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vigenère Cipher</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 42px); /* Adjusted for the width of the button */
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #answer {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    #home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #333;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    #home-button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <button id="home-button" onclick="goToHomePage()">Home</button>
+
+  <div class="container">
+    <h1>Vigenère Cipher</h1>
+    <input type="text" id="inputText" placeholder="Enter text...">
+    <input type="text" id="key" placeholder="Enter key...">
+    <button id="encryptBtn">Encrypt</button>
+    <button id="decryptBtn">Decrypt</button>
+    <button id="bruteForceBtn">Brute Force Decrypt</button>
+    <div id="answer"></div>
+  </div>
+
+  <script>
+    function vigenereCipher(text, key, encrypt) {
+      if (!text) {
+        throw new Error('Input text is required.');
+      }
+
+      if (encrypt && !key) {
+        throw new Error('Key is required for encryption.');
+      }
+
+      if (!encrypt && !key) {
+        throw new Error('Key is required for decryption.');
+      }
+
+      const keyRegex = /^[A-Za-z]+$/;
+      if (!encrypt && !keyRegex.test(key)) {
+        throw new Error('Key should contain only alphabetic characters.');
+      }
+
+      let result = '';
+      const keyLength = key.length;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const charCode = char.charCodeAt(0);
+        let shift = key.charCodeAt(i % keyLength) - 65;
+        if (char.match(/[A-Za-z]/)) {
+          if (charCode >= 65 && charCode <= 90) { // Uppercase letters
+            if (!encrypt) shift = -shift;
+            result += String.fromCharCode(((charCode - 65 + shift + 26) % 26) + 65);
+          } else if (charCode >= 97 && charCode <= 122) { // Lowercase letters
+            if (!encrypt) shift = -shift;
+            result += String.fromCharCode(((charCode - 97 + shift + 26) % 26) + 97);
+          }
+        } else {
+          result += char;
+        }
+      }
+      return result;
+    }
+
+    function bruteForceDecrypt(text) {
+      const possibleKeys = [];
+      for (let i = 0; i < 26; i++) {
+        possibleKeys.push(String.fromCharCode(65 + i).repeat(text.length));
+      }
+
+      const decryptedTexts = possibleKeys.map(key => vigenereCipher(text, key, false));
+      return decryptedTexts;
+    }
+
+    document.getElementById('encryptBtn').addEventListener('click', function() {
+      try {
+        const inputText = document.getElementById('inputText').value;
+        const key = document.getElementById('key').value.toUpperCase();
+        const encryptedText = vigenereCipher(inputText, key, true);
+        document.getElementById('answer').innerText = encryptedText;
+      } catch (error) {
+        document.getElementById('answer').innerText = error.message;
+      }
+    });
+
+    document.getElementById('decryptBtn').addEventListener('click', function() {
+      try {
+        const inputText = document.getElementById('inputText').value;
+        const key = document.getElementById('key').value.toUpperCase();
+        const decryptedText = vigenereCipher(inputText, key, false);
+        document.getElementById('answer').innerText = decryptedText;
+      } catch (error) {
+        document.getElementById('answer').innerText = error.message;
+      }
+    });
+
+    document.getElementById('bruteForceBtn').addEventListener('click', function() {
+      try {
+        const inputText = document.getElementById('inputText').value;
+        const decryptedTexts = bruteForceDecrypt(inputText);
+        document.getElementById('answer').innerText = decryptedTexts.join('\n');
+      } catch (error) {
+        document.getElementById('answer').innerText = error.message;
+      }
+    });
+
+    function goToHomePage() {
+      window.location.href = 'file:///C:/CYBERSECURITY/Hashom2/index.html';
+      link.setAttribute('target', '_blank');
+    }
+  </script>
+</body>
+</html>

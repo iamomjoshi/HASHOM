@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCD Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .sidebar {
+            width: 200px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            color: #007bff;
+        }
+
+        .content {
+            margin-left: 20px;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Conversions</h2>
+            <ul>
+                <li><a href="#" onclick="showConversion('bcdToDec')">BCD to Decimal</a></li>
+                <li><a href="#" onclick="showConversion('decToBCD')">Decimal to BCD</a></li>
+            </ul>
+        </div>
+        <div class="content" id="content">
+            <h1>BCD Converter</h1>
+            <!-- Conversion content will be loaded here -->
+        </div>
+    </div>
+    <script>
+        function showConversion(conversionType) {
+            var contentElement = document.getElementById('content');
+            var conversionContent = '';
+
+            switch (conversionType) {
+                case 'bcdToDec':
+                    conversionContent = `<h2>BCD to Decimal</h2>
+                                         <input type="text" id="bcdInput" placeholder="Enter a BCD number">
+                                         <button onclick="bcdToDec()">Convert</button>
+                                         <div id="result"></div>`;
+                    break;
+                case 'decToBCD':
+                    conversionContent = `<h2>Decimal to BCD</h2>
+                                         <input type="text" id="decInput" placeholder="Enter a decimal number">
+                                         <button onclick="decToBCD()">Convert</button>
+                                         <div id="result"></div>`;
+                    break;
+                default:
+                    conversionContent = '<p>Invalid conversion type</p>';
+            }
+
+            contentElement.innerHTML = conversionContent;
+        }
+
+        function bcdToDec() {
+            var bcdInput = document.getElementById('bcdInput').value;
+            var decimalValue = parseInt(bcdInput, 2);
+            document.getElementById('result').innerHTML = `Decimal Value: ${decimalValue}`;
+        }
+
+        function decToBCD() {
+            var decInput = document.getElementById('decInput').value;
+            var bcdValue = Number(decInput).toString(2);
+            document.getElementById('result').innerHTML = `BCD Value: ${bcdValue}`;
+        }
+    </script>
+</body>
+</html>

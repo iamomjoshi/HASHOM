@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caesar Cipher</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 42px); /* Adjusted for the width of the button */
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #answer {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    #home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #333;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    #home-button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <button id="home-button" onclick="goToHomePage()">Home</button>
+
+  <div class="container">
+    <h1>Caesar Cipher</h1>
+    <input type="text" id="inputText" placeholder="Enter text...">
+    <button id="encryptBtn">Encrypt</button>
+    <button id="decryptBtn">Decrypt</button>
+    <div id="answer"></div>
+  </div>
+
+  <script>
+    function caesarCipher(text, shift) {
+      let result = '';
+      for (let i = 0; i < text.length; i++) {
+        let char = text[i];
+        if (char.match(/[a-z]/i)) {
+          let code = text.charCodeAt(i);
+          if (code >= 65 && code <= 90) {
+            char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+          } else if (code >= 97 && code <= 122) {
+            char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+          }
+        }
+        result += char;
+      }
+      return result;
+    }
+
+    document.getElementById('encryptBtn').addEventListener('click', function() {
+      const inputText = document.getElementById('inputText').value;
+      const shift = parseInt(prompt('Enter the shift (0-25):'));
+      if (!isNaN(shift) && shift >= 0 && shift <= 25) {
+        const encryptedText = caesarCipher(inputText, shift);
+        document.getElementById('answer').innerText = encryptedText;
+      } else {
+        alert('Please enter a valid shift value (0-25).');
+      }
+    });
+
+    document.getElementById('decryptBtn').addEventListener('click', function() {
+      const inputText = document.getElementById('inputText').value;
+      const shift = parseInt(prompt('Enter the shift (0-25):'));
+      if (!isNaN(shift) && shift >= 0 && shift <= 25) {
+        const decryptedText = caesarCipher(inputText, (26 - shift) % 26);
+        document.getElementById('answer').innerText = decryptedText;
+      } else {
+        alert('Please enter a valid shift value (0-25).');
+      }
+    });
+
+    function goToHomePage() {
+      window.location.href = 'file:///C:/CYBERSECURITY/Hashom2/index.html';
+    }
+  </script>
+</body>
+</html>

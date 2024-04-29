@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Base Converter</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+    
+    .sidebar {
+        width: 200px;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+    
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .sidebar ul li {
+        margin-bottom: 10px;
+    }
+    
+    .sidebar ul li a {
+        text-decoration: none;
+        color: #fff;
+        transition: color 0.3s;
+    }
+    
+    .sidebar ul li a:hover {
+        color: #007bff;
+    }
+    
+    .content {
+        margin-left: 20px;
+        max-width: 600px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Conversions</h2>
+            <ul>
+                <li><a href="#" onclick="showConversion('hexToDec')">Hexadecimal to Decimal</a></li>
+                <li><a href="#" onclick="showConversion('decToHex')">Decimal to Hexadecimal</a></li>
+                <li><a href="#" onclick="showConversion('binToHex')">Binary to Hexadecimal</a></li>
+                <li><a href="#" onclick="showConversion('hexToBin')">Hexadecimal to Binary</a></li>
+                <li><a href="#" onclick="showConversion('hexToOct')">Hexadecimal to Octal</a></li>
+                <li><a href="#" onclick="showConversion('octToHex')">Octal to Hexadecimal</a></li>
+                <li><a href="#" onclick="showConversion('binToDec')">Binary to Decimal</a></li>
+                <li><a href="#" onclick="showConversion('decToBin')">Decimal to Binary</a></li>
+                <li><a href="#" onclick="showConversion('decToOct')">Decimal to Octal</a></li>
+                <li><a href="#" onclick="showConversion('octToDec')">Octal to Decimal</a></li>
+                <li><a href="#" onclick="showConversion('octToBin')">Octal to Binary</a></li>
+                <li><a href="#" onclick="showConversion('binToOct')">Binary to Octal</a></li>
+            </ul>
+        </div>
+        <div class="content" id="content">
+            <h1>Number Base Converter</h1>
+            <!-- Conversion content will be loaded here -->
+        </div>
+    </div>
+    <script>
+        function showConversion(conversionType) {
+    var contentElement = document.getElementById('content');
+    var conversionContent = '';
+
+    switch (conversionType) {
+        case 'hexToDec':
+            conversionContent = `<h2>Hexadecimal to Decimal</h2>
+                                 <input type="text" id="hexInput" placeholder="Enter a hexadecimal number">
+                                 <button onclick="hexToDec()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'decToHex':
+            conversionContent = `<h2>Decimal to Hexadecimal</h2>
+                                 <input type="text" id="decInput" placeholder="Enter a decimal number">
+                                 <button onclick="decToHex()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'binToHex':
+            conversionContent = `<h2>Binary to Hexadecimal</h2>
+                                 <input type="text" id="binInput" placeholder="Enter a binary number">
+                                 <button onclick="binToHex()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'hexToBin':
+            conversionContent = `<h2>Hexadecimal to Binary</h2>
+                                 <input type="text" id="hexInput" placeholder="Enter a hexadecimal number">
+                                 <button onclick="hexToBin()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'hexToOct':
+            conversionContent = `<h2>Hexadecimal to Octal</h2>
+                                 <input type="text" id="hexInput" placeholder="Enter a hexadecimal number">
+                                 <button onclick="hexToOct()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'octToHex':
+            conversionContent = `<h2>Octal to Hexadecimal</h2>
+                                 <input type="text" id="octInput" placeholder="Enter an octal number">
+                                 <button onclick="octToHex()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'binToDec':
+            conversionContent = `<h2>Binary to Decimal</h2>
+                                 <input type="text" id="binInput" placeholder="Enter a binary number">
+                                 <button onclick="binToDec()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'decToBin':
+            conversionContent = `<h2>Decimal to Binary</h2>
+                                 <input type="text" id="decInput" placeholder="Enter a decimal number">
+                                 <button onclick="decToBin()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'decToOct':
+            conversionContent = `<h2>Decimal to Octal</h2>
+                                 <input type="text" id="decInput" placeholder="Enter a decimal number">
+                                 <button onclick="decToOct()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'octToDec':
+            conversionContent = `<h2>Octal to Decimal</h2>
+                                 <input type="text" id="octInput" placeholder="Enter an octal number">
+                                 <button onclick="octToDec()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'octToBin':
+            conversionContent = `<h2>Octal to Binary</h2>
+                                 <input type="text" id="octInput" placeholder="Enter an octal number">
+                                 <button onclick="octToBin()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        case 'binToOct':
+            conversionContent = `<h2>Binary to Octal</h2>
+                                 <input type="text" id="binInput" placeholder="Enter a binary number">
+                                 <button onclick="binToOct()">Convert</button>
+                                 <div id="result"></div>`;
+            break;
+        default:
+            conversionContent = '<p>Invalid conversion type</p>';
+    }
+
+    contentElement.innerHTML = conversionContent;
+}
+
+function hexToDec() {
+    var hexInput = document.getElementById('hexInput').value;
+    var decimalValue = parseInt(hexInput, 16);
+    document.getElementById('result').innerHTML = `Decimal Value: ${decimalValue}`;
+}
+
+function decToHex() {
+    var decInput = document.getElementById('decInput').value;
+    var hexValue = Number(decInput).toString(16).toUpperCase();
+    document.getElementById('result').innerHTML = `Hexadecimal Value: ${hexValue}`;
+}
+
+function binToHex() {
+    var binInput = document.getElementById('binInput').value;
+    var hexValue = parseInt(binInput, 2).toString(16).toUpperCase();
+    document.getElementById('result').innerHTML = `Hexadecimal Value: ${hexValue}`;
+}
+
+function hexToBin() {
+    var hexInput = document.getElementById('hexInput').value;
+    var binValue = parseInt(hexInput, 16).toString(2);
+    document.getElementById('result').innerHTML = `Binary Value: ${binValue}`;
+}
+
+function hexToOct() {
+    var hexInput = document.getElementById('hexInput').value;
+    var octValue = parseInt(hexInput, 16).toString(8);
+    document.getElementById('result').innerHTML = `Octal Value: ${octValue}`;
+}
+
+function octToHex() {
+    var octInput = document.getElementById('octInput').value;
+    var hexValue = parseInt(octInput, 8).toString(16).toUpperCase();
+    document.getElementById('result').innerHTML = `Hexadecimal Value: ${hexValue}`;
+}
+
+function binToDec() {
+    var binInput = document.getElementById('binInput').value;
+    var decimalValue = parseInt(binInput, 2);
+    document.getElementById('result').innerHTML = `Decimal Value: ${decimalValue}`;
+}
+
+function decToBin() {
+    var decInput = document.getElementById('decInput').value;
+    var binValue = Number(decInput).toString(2);
+    document.getElementById('result').innerHTML = `Binary Value: ${binValue}`;
+}
+
+function decToOct() {
+    var decInput = document.getElementById('decInput').value;
+    var octValue = Number(decInput).toString(8);
+    document.getElementById('result').innerHTML = `Octal Value: ${octValue}`;
+}
+
+function octToDec() {
+    var octInput = document.getElementById('octInput').value;
+    var decimalValue = parseInt(octInput, 8);
+    document.getElementById('result').innerHTML = `Decimal Value: ${decimalValue}`;
+}
+
+function octToBin() {
+    var octInput = document.getElementById('octInput').value;
+    var binValue = parseInt(octInput, 8).toString(2);
+    document.getElementById('result').innerHTML = `Binary Value: ${binValue}`;
+}
+
+function binToOct() {
+    var binInput = document.getElementById('binInput').value;
+    var octValue = parseInt(binInput, 2).toString(8);
+    document.getElementById('result').innerHTML = `Octal Value: ${octValue}`;
+}
+
+    </script>
+</body>
+</html>

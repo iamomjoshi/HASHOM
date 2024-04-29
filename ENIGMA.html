@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enigma Cipher</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 42px); /* Adjusted for the width of the button */
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #answer {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    #home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #333;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    #home-button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <button id="home-button" onclick="goToHomePage()">Home</button>
+
+  <div class="container">
+    <h1>Enigma Cipher</h1>
+    <input type="text" id="inputText" placeholder="Enter text...">
+    <button id="encryptBtn">Encrypt</button>
+    <button id="decryptBtn">Decrypt</button>
+    <div id="answer"></div>
+  </div>
+
+  <script>
+    // Rotor wiring for the Enigma machine
+    const rotorWiring = [
+      'EKMFLGDQVZNTOWYHXUSPAIBRCJ',
+      'AJDKSIRUXBLHWTMCQGZNPYFVOE',
+      'BDFHJLCPRTXVZNYEIWGAKMUSQO'
+    ];
+
+    // Reflector mapping for the Enigma machine
+    const reflectorMapping = [
+      'YRUHQSLDPXNGOKMIEBFZCWVJAT',
+      'FVPJIAOYEDRZXWGCTKUQSBNMHL'
+    ];
+
+    function enigma(text, rotorOrder, rotorPositions) {
+      // Initialize Enigma machine
+      let rotorOrderIndex = rotorOrder - 1;
+      let rotorWiringIndex = rotorOrderIndex % rotorWiring.length;
+      let rotor = rotorWiring[rotorWiringIndex];
+      let reflector = reflectorMapping[rotorOrderIndex % reflectorMapping.length];
+      let output = '';
+
+      // Adjust rotor positions
+      for (let i = 0; i < rotorPositions.length; i++) {
+        let offset = rotorPositions.charCodeAt(i) - 'A'.charCodeAt(0);
+        rotor = rotor.substring(offset) + rotor.substring(0, offset);
+      }
+
+      // Encrypt/Decrypt text
+      for (let i = 0; i < text.length; i++) {
+        let char = text[i].toUpperCase();
+        if (char >= 'A' && char <= 'Z') {
+          let index = char.charCodeAt(0) - 'A'.charCodeAt(0);
+          char = rotor.charAt(index);
+          char = reflector.charAt(char.charCodeAt(0) - 'A'.charCodeAt(0));
+          index = rotor.indexOf(char);
+          char = String.fromCharCode('A'.charCodeAt(0) + index);
+          output += char;
+        } else {
+          output += char;
+        }
+
+        // Rotate rotor
+        rotor = rotor.substring(1) + rotor[0];
+      }
+
+      return output;
+    }
+
+    document.getElementById('encryptBtn').addEventListener('click', function() {
+      const inputText = document.getElementById('inputText').value;
+      const encryptedText = enigma(inputText, 1, 'AAA');
+      document.getElementById('answer').innerText = encryptedText;
+    });
+
+    document.getElementById('decryptBtn').addEventListener('click', function() {
+      const inputText = document.getElementById('inputText').value;
+      const decryptedText = enigma(inputText, 1, 'AAA');
+      document.getElementById('answer').innerText = decryptedText;
+    });
+
+    function goToHomePage() {
+      window.location.href = 'file:///C:/CYBERSECURITY/Hashom2/index.html';
+    }
+  </script>
+</body>
+</html>
